@@ -1,6 +1,10 @@
 # CodingDiary
 Use coding diary to record your learning process :)
 
+# Introduction
++ CodingDiary is a website where users can share study resource and communicate easily.
++ CodingdDiary mainly aims at programmers and college students.
+
 ## Modules:
 + Blog Area
 + Forumpost Area
