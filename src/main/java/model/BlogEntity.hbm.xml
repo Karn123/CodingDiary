@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.BlogEntity" table="blog" dynamic-insert="true" dynamic-update="true" schema="CodingDiaryDB">
+        <id name="blogId">
+            <column name="blogID" sql-type="int(11)"/>
+            <generator class="native"/>
+        </id>
+        <property name="blogTitle">
+            <column name="blogTitle" sql-type="varchar(100)" not-null="true" length="100"/>
+        </property>
+        <property name="praiseNum">
+            <column name="praiseNum" sql-type="int(11)"/>
+        </property>
+        <property name="commentNum">
+            <column name="commentNum" sql-type="int(11)"/>
+        </property>
+        <property name="forwardNum">
+            <column name="forwardNum" sql-type="int(11)"/>
+        </property>
+        <property name="browseNum">
+            <column name="browseNum" sql-type="int(11)"/>
+        </property>
+        <property name="publishTime">
+            <column name="publishTime" sql-type="datetime" not-null="true"/>
+        </property>
+        <property name="collectNum">
+            <column name="collectNum" sql-type="int(11)"/>
+        </property>
+        <many-to-one name="userinfoByAuthorId" class="model.UserinfoEntity">
+            <column name="authorID" not-null="true" sql-type="int(11)"/>
+        </many-to-one>
+        <many-to-one name="tfByIsLegal" class="model.TfEntity">
+            <column name="isLegal"/>
+        </many-to-one>
+        <one-to-one name="blogContentByBlogId" class="model.BlogContentEntity"/>
+        <one-to-one name="blogRecommendValueByBlogId" class="model.BlogRecommendValueEntity"/>
+        <set name="blogCollectsByBlogId" inverse="true">
+            <key>
+                <column name="collectBlogID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.BlogCollectEntity"/>
+        </set>
+        <set name="blogCommentsByBlogId" inverse="true">
+            <key>
+                <column name="commentBlogID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.BlogCommentEntity"/>
+        </set>
+        <set name="blogForwardsByBlogId" inverse="true">
+            <key>
+                <column name="forwardBlogID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.BlogForwardEntity"/>
+        </set>
+        <set name="blogTagsByBlogId" inverse="true">
+            <key>
+                <column name="BlogIDNum"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.BlogTagEntity"/>
+        </set>
+        <set name="praiseBlogsByBlogId" inverse="true">
+            <key>
+                <column name="praiseBlogID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.PraiseBlogEntity"/>
+        </set>
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.UserfansEntity" table="userfans" schema="CodingDiaryDB">
+        <composite-id mapped="true" class="model.UserfansEntityPK">
+            <key-property name="userIdNum">
+                <column name="userIDNum" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="fanId">
+                <column name="fanID" sql-type="int(11)"/>
+            </key-property>
+        </composite-id>
+        <many-to-one name="userinfoByUserIdNum" class="model.UserinfoEntity">
+            <column name="userIDNum" />
+        </many-to-one>
+        <many-to-one name="userinfoByFanId" class="model.UserinfoEntity">
+            <column name="fanID" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

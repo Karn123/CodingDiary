@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.BlogTagEntity" table="blog_tag" schema="CodingDiaryDB">
+        <composite-id mapped="true" class="model.BlogTagEntityPK">
+            <key-property name="blogIdNum">
+                <column name="BlogIDNum" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="tagIdNum">
+                <column name="TagIDNum" sql-type="int(11)"/>
+            </key-property>
+        </composite-id>
+        <many-to-one name="blogByBlogIdNum" class="model.BlogEntity">
+            <column name="BlogIDNum"/>
+        </many-to-one>
+        <many-to-one name="tagByTagIdNum" class="model.TagEntity">
+            <column name="TagIDNum"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

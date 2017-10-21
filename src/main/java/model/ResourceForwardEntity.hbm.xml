@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.ResourceForwardEntity" table="resource_forward" schema="CodingDiaryDB">
+        <composite-id mapped="true" class="model.ResourceForwardEntityPK">
+            <key-property name="forwardResourceId">
+                <column name="forwardResourceID" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="forwarderId">
+                <column name="forwarderID" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="forwardTime">
+                <column name="forwardTime" sql-type="datetime"/>
+            </key-property>
+        </composite-id>
+        <property name="forwardMsg">
+            <column name="forwardMsg" sql-type="varchar(1000)" length="1000" />
+        </property>
+        <many-to-one name="resourceByForwardResourceId" class="model.ResourceEntity">
+            <column name="forwardResourceID"/>
+        </many-to-one>
+        <many-to-one name="userinfoByForwarderId" class="model.UserinfoEntity">
+            <column name="forwarderID"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

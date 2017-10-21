@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.ChatMsgEntity" table="chat_msg" dynamic-update="true" dynamic-insert="true" schema="CodingDiaryDB">
+        <id name="msgId">
+            <column name="msg_id" sql-type="varchar(50)" not-null="true"/>
+        </id>
+        <property name="msgContent">
+            <column name="msg_content" sql-type="varchar(500)" length="500" not-null="true"/>
+        </property>
+        <property name="msgDate">
+            <column name="msg_date" sql-type="datetime" not-null="true"/>
+        </property>
+        <many-to-one name="userinfoByMsgFromUserId" class="model.UserinfoEntity">
+            <column name="msg_from_user_id" />
+        </many-to-one>
+        <many-to-one name="userinfoByMsgToUserId" class="model.UserinfoEntity">
+            <column name="msg_to_user_id" />
+        </many-to-one>
+        <many-to-one name="tfByIsRead" class="model.TfEntity">
+            <column name="isRead"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

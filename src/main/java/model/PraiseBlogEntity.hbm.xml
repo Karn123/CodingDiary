@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.PraiseBlogEntity" table="praise_blog" schema="CodingDiaryDB">
+        <composite-id mapped="true" class="model.PraiseBlogEntityPK">
+            <key-property name="praiseFromUserId">
+                <column name="praiseFromUserID" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="praiseBlogId">
+                <column name="praiseBlogID" sql-type="int(11)"/>
+            </key-property>
+        </composite-id>
+        <many-to-one name="userinfoByPraiseFromUserId" class="model.UserinfoEntity">
+            <column name="praiseFromUserID"/>
+        </many-to-one>
+        <many-to-one name="blogByPraiseBlogId" class="model.BlogEntity">
+            <column name="praiseBlogID"/>
+        </many-to-one>
+        <many-to-one name="tfByIsPraised" class="model.TfEntity">
+            <column name="isPraised" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

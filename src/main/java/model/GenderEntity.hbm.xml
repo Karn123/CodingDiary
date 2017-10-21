@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.GenderEntity" dynamic-update="true" dynamic-insert="true" table="gender" schema="CodingDiaryDB">
+        <id name="genderId">
+            <column name="genderID" sql-type="int(11)"/>
+            <generator class="native"/>
+        </id>
+        <property name="genderName">
+            <column name="genderName" sql-type="char(1)" length="1"/>
+        </property>
+        <set name="userinfosByGenderId" inverse="true">
+            <key>
+                <column name="sex" />
+            </key>
+            <one-to-many not-found="ignore" class="model.UserinfoEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

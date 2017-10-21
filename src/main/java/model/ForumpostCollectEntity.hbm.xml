@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.ForumpostCollectEntity" dynamic-insert="true" dynamic-update="true" table="forumpost_collect" schema="CodingDiaryDB">
+        <composite-id mapped="true" class="model.ForumpostCollectEntityPK">
+            <key-property name="forumpostId">
+                <column name="forumpostID" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="collectorId">
+                <column name="collectorID" sql-type="int(11)"/>
+            </key-property>
+        </composite-id>
+        <many-to-one name="forumpostByForumpostId" class="model.ForumpostEntity">
+            <column name="forumpostID"/>
+        </many-to-one>
+        <many-to-one name="userinfoByCollectorId" class="model.UserinfoEntity">
+            <column name="collectorID"/>
+        </many-to-one>
+        <many-to-one name="tfByIsCollected" class="model.TfEntity">
+            <column name="isCollected" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

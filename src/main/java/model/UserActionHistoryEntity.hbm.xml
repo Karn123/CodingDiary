@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.UserActionHistoryEntity" table="user_action_history" dynamic-insert="true" dynamic-update="true"  schema="CodingDiaryDB">
+        <composite-id mapped="true" class="model.UserActionHistoryEntityPK">
+            <key-property name="userId">
+                <column name="user_id" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="actionId">
+                <column name="action_id" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="actionAboutId">
+                <column name="action_about_id" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="aboutThemeId">
+                <column name="about_theme_id" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="actionTime">
+                <column name="action_time" sql-type="datetime"/>
+            </key-property>
+        </composite-id>
+        <many-to-one name="userinfoByUserId" class="model.UserinfoEntity">
+            <column name="user_id" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="userActionByActionId" class="model.UserActionEntity">
+            <column name="action_id" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="userActionAboutByActionAboutId" class="model.UserActionAboutEntity">
+            <column name="action_about_id" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

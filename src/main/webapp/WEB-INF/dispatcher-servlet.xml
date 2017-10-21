@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--HandlerMapping,基于非注解拦截,根据URL映射到对应名称的Bean进行处理-->
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+
+    <!--HandlerAdapter，基于非注解拦截,将控制器适配为SimpleControllerHandlerAdapter-->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+
+    <mvc:interceptors>
+        <!--拦截器链。按顺序拦截指定的请求,拦截所有用户操作，判断其是否登录-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="interceptor.AuthorityInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!-- 静态资源映射 -->
+    <mvc:resources location="/jsp/js/" mapping="/js/**"/>
+    <mvc:resources location="/jsp/css/" mapping="/css/**"/>
+    <mvc:resources location="/jsp/images/" mapping="/img/**"/>
+    <!-- 开启默认的注解映射支持 -->
+    <mvc:annotation-driven/>
+
+    <!--HandlerMapping,基于注解-->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+    <!--HandlerAdapter,基于注解-->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+    <!--ViewResolver,支持解析Servlet JSP视图-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--将在控制器中传入的模型数据在视图中展示出来-->
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+        <!--查找视图页面的前缀和后缀名，若传来的逻辑视图名为index,则该其对应的是/webapp/jsp/index.jsp-->
+        <property name="prefix" value="/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+                p:defaultEncoding="UTF-8"
+                p:maxUploadSize="204800000"
+                p:uploadTempDir="WEB-INF/fileResources"
+    >
+    </bean>
+    <!-- 配置JSON支持 -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >
+        <property name="messageConverters">
+            <util:list id="beanList">
+                <ref bean="mappingJacksonHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+                <ref bean="stringHttpMessageConverter" />
+            </util:list>
+        </property>
+    </bean>
+    <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                 <value>text/plain;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+    <context:annotation-config/>
+    <!-- 自动扫描@Controller,@Service,@Repository注入为bean-->
+    <context:component-scan base-package="controller" />
+    <context:component-scan base-package="service" />
+    <context:component-scan base-package="model" />
+
+    <!--&lt;!&ndash;拦截器的beans&ndash;&gt;-->
+    <!--<import resource="interceptorBeans.xml"/>-->
+</beans>

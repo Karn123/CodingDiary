@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.ResourceEntity" table="resource" dynamic-update="true" dynamic-insert="true" schema="CodingDiaryDB">
+        <id name="resourceId">
+            <column name="resourceID" sql-type="int(11)"/>
+            <generator class="native"/>
+        </id>
+        <property name="resourceName">
+            <column name="resourceName" sql-type="varchar(300)" not-null="true" length="300"/>
+        </property>
+        <property name="resourceDescription">
+            <column name="resourceDescription" sql-type="varchar(800)" not-null="true" length="800"/>
+        </property>
+        <property name="resourcePath">
+            <column name="resourcePath" sql-type="varchar(800)" not-null="true" length="800"/>
+        </property>
+        <property name="praiseNum">
+            <column name="praiseNum" sql-type="int(11)" />
+        </property>
+        <property name="commentNum">
+            <column name="commentNum" sql-type="int(11)" />
+        </property>
+        <property name="uploadTime">
+            <column name="uploadTime" sql-type="datetime" not-null="true"/>
+        </property>
+        <property name="downloadCount">
+            <column name="downloadCount" sql-type="int(11)" />
+        </property>
+        <property name="forwardNum">
+            <column name="forwardNum" sql-type="int(11)" />
+        </property>
+        <property name="collectNum">
+            <column name="collectNum" sql-type="int(11)" />
+        </property>
+        <property name="browseNum">
+            <column name="browseNum" sql-type="int(11)" />
+        </property>
+        <property name="resourceScore">
+            <column name="resourceScore" sql-type="float"/>
+        </property>
+        <property name="resourceSize">
+            <column name="resourceSize" sql-type="varchar(30)" />
+        </property>
+        <one-to-one name="resourceRecommendValueByResourceId" class="model.ResourceRecommendValueEntity"/>
+        <many-to-one name="userinfoByUploaderId" class="model.UserinfoEntity">
+            <column name="uploaderID"/>
+        </many-to-one>
+        <many-to-one name="tfByIsLegal" class="model.TfEntity">
+            <column name="isLegal" />
+        </many-to-one>
+        <set name="praiseResourcesByResourceId" inverse="true">
+            <key>
+                <column name="praiseResourceID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.PraiseResourceEntity"/>
+        </set>
+        <set name="resourceCollectsByResourceId" inverse="true">
+            <key>
+                <column name="collectResourceID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ResourceCollectEntity"/>
+        </set>
+        <set name="resourceCommentsByResourceId" inverse="true">
+            <key>
+                <column name="commentResourceID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ResourceCommentEntity"/>
+        </set>
+        <set name="resourceForwardsByResourceId" inverse="true">
+            <key>
+                <column name="forwardResourceID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ResourceForwardEntity"/>
+        </set>
+        <set name="resourceTagsByResourceId" inverse="true">
+            <key>
+                <column name="resourceIDNum"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ResourceTagEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.PraiseForumpostFloorEntity" table="praise_forumpost_floor" schema="CodingDiaryDB">
+        <composite-id mapped="true" class="model.PraiseForumpostFloorEntityPK">
+            <key-property name="praiseFromUserId">
+                <column name="praiseFromUserID" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="praiseForumpostFloorId">
+                <column name="praiseForumpostFloorID" sql-type="int(11)"/>
+            </key-property>
+        </composite-id>
+        <many-to-one name="userinfoByPraiseFromUserId" class="model.UserinfoEntity">
+            <column name="praiseFromUserID"/>
+        </many-to-one>
+        <many-to-one name="forumpostFloorByPraiseForumpostFloorId" class="model.ForumpostFloorEntity">
+            <column name="praiseForumpostFloorID"/>
+        </many-to-one>
+        <many-to-one name="tfByIsPraised" class="model.TfEntity">
+            <column name="isPraised" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

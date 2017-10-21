@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.BlogContentEntity" dynamic-insert="true" dynamic-update="true" table="blog_content" schema="CodingDiaryDB">
+        <id name="blogId">
+            <column name="blog_id" sql-type="int(11)"/>
+        </id>
+        <property name="blogContent">
+            <column name="blogContent" sql-type="longtext"/>
+        </property>
+        <one-to-one name="blogByBlogId" class="model.BlogEntity"/>
+    </class>
+</hibernate-mapping>

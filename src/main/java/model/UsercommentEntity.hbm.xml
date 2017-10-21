@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.UsercommentEntity" table="usercomment" dynamic-update="true" dynamic-insert="true" schema="CodingDiaryDB">
+        <id name="commentId">
+            <column name="commentID" sql-type="int(11)"/>
+            <generator class="native"/>
+        </id>
+        <property name="commentContent">
+            <column name="commentContent" sql-type="varchar(2000)" length="2000" not-null="true"/>
+        </property>
+        <property name="praiseNum">
+            <column name="praiseNum" sql-type="int(11)" />
+        </property>
+        <property name="commentTime">
+            <column name="commentTime" sql-type="datetime" not-null="true"/>
+        </property>
+        <many-to-one name="userinfoByCommenterId" class="model.UserinfoEntity">
+            <column name="commenterID" not-null="true"/>
+        </many-to-one>
+        <set name="blogCommentsByCommentId" inverse="true">
+            <key>
+                <column name="commentIDNum"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.BlogCommentEntity"/>
+        </set>
+        <set name="forumpostFloorCommentsByCommentId" inverse="true">
+            <key>
+                <column name="commentIDNum"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ForumpostFloorCommentEntity"/>
+        </set>
+        <set name="praiseCommentsByCommentId" inverse="true">
+            <key>
+                <column name="praiseCommentID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.PraiseCommentEntity"/>
+        </set>
+        <set name="resourceCommentsByCommentId" inverse="true">
+            <key>
+                <column name="commentIDNum"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ResourceCommentEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

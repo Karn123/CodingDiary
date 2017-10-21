@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.ForumpostEntity" dynamic-insert="true" dynamic-update="true" table="forumpost" schema="CodingDiaryDB">
+        <id name="forumpostId">
+            <column name="forumpostId" sql-type="int(11)"/>
+            <generator class="native"/>
+        </id>
+        <property name="forumpostTitle">
+            <column name="forumpostTitle" sql-type="varchar(100)" not-null="true" length="100"/>
+        </property>
+        <property name="publishTime">
+            <column name="publishTime" sql-type="datetime" not-null="true"/>
+        </property>
+        <property name="collectNum">
+            <column name="collectNum" sql-type="int(11)"/>
+        </property>
+        <one-to-one name="forumpostRecommendValueByForumpostId" class="model.ForumpostRecommendValueEntity"/>
+        <many-to-one name="forumpostFloorByFirstFloorId" class="model.ForumpostFloorEntity">
+            <column name="firstFloorId"/>
+        </many-to-one>
+        <many-to-one name="userinfoByAuthorId" class="model.UserinfoEntity">
+            <column name="authorId"/>
+        </many-to-one>
+        <set name="forumpostCollectsByForumpostId" inverse="true">
+            <key>
+                <column name="forumpostID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ForumpostCollectEntity"/>
+        </set>
+        <set name="forumpostFloorCommentsByForumpostId" inverse="true">
+            <key>
+                <column name="commentForumpostID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ForumpostFloorCommentEntity"/>
+        </set>
+        <set name="forumpostForwardsByForumpostId" inverse="true">
+            <key>
+                <column name="forumpostID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ForumpostForwardEntity"/>
+        </set>
+        <set name="forumpostTagsByForumpostId" inverse="true">
+            <key>
+                <column name="forumpostID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ForumpostTagEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

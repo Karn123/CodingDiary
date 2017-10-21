@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.TagEntity" dynamic-insert="true" dynamic-update="true" table="tag" schema="CodingDiaryDB">
+        <id name="tagId">
+            <column name="tagID" sql-type="int(11)"/>
+            <generator class="native"/>
+        </id>
+        <property name="tagName">
+            <column name="tagName" sql-type="varchar(20)" length="20"/>
+        </property>
+        <set name="blogTagsByTagId" inverse="true">
+            <key>
+                <column name="TagIDNum"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.BlogTagEntity"/>
+        </set>
+        <set name="forumpostTagsByTagId" inverse="true">
+            <key>
+                <column name="tagID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ForumpostTagEntity"/>
+        </set>
+        <set name="resourceTagsByTagId" inverse="true">
+            <key>
+                <column name="tagIDNum"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ResourceTagEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.UserActionEntity" table="user_action" dynamic-insert="true" dynamic-update="true" schema="CodingDiaryDB">
+        <id name="actionId">
+            <column name="actionID" sql-type="int(11)"/>
+            <generator class="native"/>
+        </id>
+        <property name="actionType">
+            <column name="actionType" sql-type="varchar(30)" length="30" not-null="true"/>
+        </property>
+        <set name="notificationMessagesByActionId" inverse="true">
+            <key>
+                <column name="notiMsgActionType"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.NotificationMessageEntity"/>
+        </set>
+        <set name="userActionHistoriesByActionId" inverse="true">
+            <key>
+                <column name="action_id"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.UserActionHistoryEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.ResourceTagEntity" table="resource_tag" schema="CodingDiaryDB">
+        <composite-id mapped="true" class="model.ResourceTagEntityPK">
+            <key-property name="resourceIdNum">
+                <column name="resourceIDNum" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="tagIdNum">
+                <column name="tagIDNum" sql-type="int(11)"/>
+            </key-property>
+        </composite-id>
+        <many-to-one name="resourceByResourceIdNum" class="model.ResourceEntity">
+            <column name="resourceIDNum"/>
+        </many-to-one>
+        <many-to-one name="tagByTagIdNum" class="model.TagEntity">
+            <column name="tagIDNum"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

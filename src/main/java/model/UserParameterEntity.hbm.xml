@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.UserParameterEntity" table="user_parameter" schema="CodingDiaryDB">
+        <id name="userId">
+            <column name="userID" sql-type="int(11)" not-null="true"/>
+        </id>
+        <property name="browseParameter">
+            <column name="browseParameter" sql-type="double(11)" precision="11" not-null="true"/>
+        </property>
+        <property name="collectParameter">
+            <column name="collectParameter" sql-type="double(11)" precision="11" not-null="true"/>
+        </property>
+        <property name="praiseParameter">
+            <column name="praiseParameter" sql-type="double(11)" precision="11" not-null="true"/>
+        </property>
+        <property name="forwardParameter">
+            <column name="forwardParameter" sql-type="double(11)" precision="11" not-null="true"/>
+        </property>
+        <one-to-one name="userinfoByUserId" class="model.UserinfoEntity"/>
+    </class>
+</hibernate-mapping>

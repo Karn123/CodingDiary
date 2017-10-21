@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.UserinfoEntity" table="userinfo" dynamic-insert="true" dynamic-update="true" schema="CodingDiaryDB">
+        <id name="userId">
+            <column name="userID" sql-type="int(11)"/>
+            <generator class="native"/>
+        </id>
+        <property name="teleNum">
+            <column name="teleNum" sql-type="varchar(20)" length="20" />
+        </property>
+        <property name="nickName">
+            <column name="nickName" sql-type="varchar(100)" length="100" not-null="true"/>
+        </property>
+        <property name="userPassword">
+            <column name="userPassword" sql-type="varchar(40)" length="40" not-null="true"/>
+        </property>
+        <property name="email">
+            <column name="email" sql-type="varchar(40)" length="40" />
+        </property>
+        <property name="age">
+            <column name="age" sql-type="int(11) unsigned" />
+        </property>
+        <property name="userLevel">
+            <column name="userLevel" sql-type="int(11)" />
+        </property>
+        <property name="xp">
+            <column name="XP" sql-type="int(11)" />
+        </property>
+        <property name="headPortrait">
+            <column name="headPortrait" sql-type="varchar(1000)" length="1000" />
+        </property>
+        <property name="realName">
+            <column name="realName" sql-type="varchar(30)" length="30" />
+        </property>
+        <property name="fansNum">
+            <column name="fansNum" sql-type="int(11)" />
+        </property>
+        <property name="entranceYear">
+            <column name="entranceYear" sql-type="int(11)" />
+        </property>
+        <property name="entranceMonth">
+            <column name="entranceMonth" sql-type="int(4)" />
+        </property>
+        <property name="estimateGraduateDateYear">
+            <column name="estimateGraduateDateYear" sql-type="int(11)" />
+        </property>
+        <property name="estimateGraduateMonth">
+            <column name="estimateGraduateMonth" sql-type="int(4)" />
+        </property>
+        <property name="instituteName">
+            <column name="instituteName" sql-type="varchar(100)" length="100" />
+        </property>
+        <property name="universityName">
+            <column name="universityName" sql-type="varchar(11)" length="11" />
+        </property>
+        <property name="registerTime">
+            <column name="registerTime" sql-type="datetime" />
+        </property>
+        <property name="isCertified">
+            <column name="isCertified" sql-type="int"/>
+        </property>
+        <many-to-one name="genderBySex" class="model.GenderEntity">
+            <column name="sex" />
+        </many-to-one>
+        <many-to-one name="tfByIsGotBlocked" class="model.TfEntity">
+            <column name="isGotBlocked" />
+        </many-to-one>
+
+        <set name="administratorsByUserId" inverse="true">
+            <key>
+                <column name="adminUserID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.AdministratorEntity"/>
+        </set>
+        <set name="blogsByUserId" inverse="true">
+            <key>
+                <column name="authorID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.BlogEntity"/>
+        </set>
+        <set name="blogCollectsByUserId" inverse="true">
+            <key>
+                <column name="collectorID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.BlogCollectEntity"/>
+        </set>
+        <set name="blogForwardsByUserId" inverse="true">
+            <key>
+                <column name="forwarderID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.BlogForwardEntity"/>
+        </set>
+        <set name="chatMsgsByUserId" inverse="true">
+            <key>
+                <column name="msg_from_user_id"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ChatMsgEntity"/>
+        </set>
+        <set name="chatMsgsByUserId_0" inverse="true">
+            <key>
+                <column name="msg_to_user_id"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ChatMsgEntity"/>
+        </set>
+        <set name="forumpostCollectsByUserId" inverse="true">
+            <key>
+                <column name="collectorID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ForumpostCollectEntity"/>
+        </set>
+        <set name="forumpostFloorsByUserId" inverse="true">
+            <key>
+                <column name="authorID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ForumpostFloorEntity"/>
+        </set>
+        <set name="forumpostForwardsByUserId" inverse="true">
+            <key>
+                <column name="forwarderID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ForumpostForwardEntity"/>
+        </set>
+        <set name="notificationMessagesByUserId" inverse="true">
+            <key>
+                <column name="senderID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.NotificationMessageEntity"/>
+        </set>
+        <set name="notificationMessagesByUserId_0" inverse="true">
+            <key>
+                <column name="receiverID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.NotificationMessageEntity"/>
+        </set>
+        <set name="praiseBlogsByUserId" inverse="true">
+            <key>
+                <column name="praiseFromUserID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.PraiseBlogEntity"/>
+        </set>
+        <set name="praiseCommentsByUserId" inverse="true">
+            <key>
+                <column name="praiseFromUserID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.PraiseCommentEntity"/>
+        </set>
+        <set name="praiseForumpostsByUserId" inverse="true">
+            <key>
+                <column name="praiseFromUserID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.PraiseForumpostEntity"/>
+        </set>
+        <set name="praiseResourcesByUserId" inverse="true">
+            <key>
+                <column name="praiseFromUserID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.PraiseResourceEntity"/>
+        </set>
+        <set name="resourcesByUserId" inverse="true">
+            <key>
+                <column name="uploaderID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ResourceEntity"/>
+        </set>
+        <set name="resourceCollectsByUserId" inverse="true">
+            <key>
+                <column name="collectorID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ResourceCollectEntity"/>
+        </set>
+        <set name="resourceForwardsByUserId" inverse="true">
+            <key>
+                <column name="forwarderID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.ResourceForwardEntity"/>
+        </set>
+        <set name="userActionHistoriesByUserId" inverse="true">
+            <key>
+                <column name="user_id"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.UserActionHistoryEntity"/>
+        </set>
+        <set name="usercommentsByUserId" inverse="true">
+            <key>
+                <column name="commenterID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.UsercommentEntity"/>
+        </set>
+        <set name="userfanssByUserId" inverse="true">
+            <key>
+                <column name="userIDNum"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.UserfansEntity"/>
+        </set>
+        <set name="userfanssByUserId_0" inverse="true">
+            <key>
+                <column name="fanID"/>
+            </key>
+            <one-to-many not-found="ignore" class="model.UserfansEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

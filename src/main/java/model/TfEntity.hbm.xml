@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.TfEntity" table="TF" dynamic-update="true" dynamic-insert="true" schema="CodingDiaryDB">
+        <id name="tfid">
+            <column name="TFID" sql-type="int(11)"/>
+            <generator class="native"/>
+        </id>
+        <property name="tfOption">
+            <column name="TFOption" sql-type="varchar(30)" length="30" not-null="true"/>
+        </property>
+        <set name="blogsByTfid" inverse="true">
+            <key>
+                <column name="isLegal" />
+            </key>
+            <one-to-many not-found="ignore" class="model.BlogEntity"/>
+        </set>
+        <set name="blogCollectsByTfid" inverse="true">
+            <key>
+                <column name="isCollected" />
+            </key>
+            <one-to-many not-found="ignore" class="model.BlogCollectEntity"/>
+        </set>
+        <set name="forumpostCollectsByTfid" inverse="true">
+            <key>
+                <column name="isCollected" />
+            </key>
+            <one-to-many not-found="ignore" class="model.ForumpostCollectEntity"/>
+        </set>
+        <set name="forumpostFloorsByTfid" inverse="true">
+            <key>
+                <column name="isLegal" />
+            </key>
+            <one-to-many not-found="ignore" class="model.ForumpostFloorEntity"/>
+        </set>
+        <set name="praiseBlogsByTfid" inverse="true">
+            <key>
+                <column name="isPraised" />
+            </key>
+            <one-to-many not-found="ignore" class="model.PraiseBlogEntity"/>
+        </set>
+        <set name="praiseCommentsByTfid" inverse="true">
+            <key>
+                <column name="isPraised" />
+            </key>
+            <one-to-many not-found="ignore" class="model.PraiseCommentEntity"/>
+        </set>
+        <set name="praiseForumpostsByTfid" inverse="true">
+            <key>
+                <column name="isPraised" />
+            </key>
+            <one-to-many not-found="ignore" class="model.PraiseForumpostEntity"/>
+        </set>
+        <set name="praiseResourcesByTfid" inverse="true">
+            <key>
+                <column name="isPraised" />
+            </key>
+            <one-to-many not-found="ignore" class="model.PraiseResourceEntity"/>
+        </set>
+        <set name="resourcesByTfid" inverse="true">
+            <key>
+                <column name="isLegal" />
+            </key>
+            <one-to-many not-found="ignore" class="model.ResourceEntity"/>
+        </set>
+        <set name="resourceCollectsByTfid" inverse="true">
+            <key>
+                <column name="isCollected" />
+            </key>
+            <one-to-many not-found="ignore" class="model.ResourceCollectEntity"/>
+        </set>
+        <set name="userinfosByTfid" inverse="true">
+            <key>
+                <column name="isGotBlocked" />
+            </key>
+            <one-to-many not-found="ignore" class="model.UserinfoEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

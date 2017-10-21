@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="model.ForumpostFloorCommentEntity" table="forumpost_floor_comment" schema="CodingDiaryDB">
+        <composite-id mapped="true" class="model.ForumpostFloorCommentEntityPK">
+            <key-property name="commentForumpostId">
+                <column name="commentForumpostID" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="commentToFloorId">
+                <column name="commentToFloorID" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="commentIdNum">
+                <column name="commentIDNum" sql-type="int(11)"/>
+            </key-property>
+        </composite-id>
+        <many-to-one name="forumpostByCommentForumpostId" class="model.ForumpostEntity">
+            <column name="commentForumpostID"/>
+        </many-to-one>
+        <many-to-one name="forumpostFloorByCommentToFloorId" class="model.ForumpostFloorEntity">
+            <column name="commentToFloorID"/>
+        </many-to-one>
+        <many-to-one name="usercommentByCommentIdNum" class="model.UsercommentEntity">
+            <column name="commentIDNum"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
